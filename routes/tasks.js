@@ -31,8 +31,14 @@ router.post('/tasks/create', (req, res, next)=>{
 })
 
 router.post('/tasks/edit/:id', (req, res, next)=>{
+    if(!req.user){
+       return res.status(401).json({message: 'sorry, you must be logged in to update a task'}) 
+    }
     Task.findByIdAndUpdate(req.params.id, req.body, {new: true})
     .then((response)=>{
+        if(req.user._id !== response.owner){
+           return res.status(403).json({message: 'sorry, you must own the task to update it'}) 
+        }
         res.json(response)
     })
     .catch((err)=>{
