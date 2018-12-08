@@ -31,7 +31,7 @@ router.post('/tasks/create', (req, res, next)=>{
 })
 
 router.post('/tasks/edit/:id', (req, res, next)=>{
-    Task.findByIdAndUpdate(req.params.id, req.body)
+    Task.findByIdAndUpdate(req.params.id, req.body, {new: true})
     .then((response)=>{
         res.json(response)
     })
