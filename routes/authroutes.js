@@ -17,18 +17,18 @@ authRoutes.post('/signup', (req, res, next) => {
     const password = req.body.password;
   
     if (!username || !password) {
-      res.json({ message: 'Provide username and password' });
+      res.status(422).json({ message: 'Provide username and password' });
       return;
     }
 
     if(password.length < 7){
-        res.json({ message: 'Please make your password at least 7 characters long for secutiry purposes.' });
+        res.status(422).json({ message: 'Please make your password at least 7 characters long for secutiry purposes.' });
         return;
     }
   
     User.findOne({ username:username }, '_id', (err, foundUser) => {
       if (foundUser) {
-        res.json({ message: 'The username already exists' });
+        res.status(409).json({ message: 'The username already exists' });
         return;
       }
   
@@ -42,13 +42,13 @@ authRoutes.post('/signup', (req, res, next) => {
   
       theUser.save((err) => {
         if (err) {
-          res.json({ message: 'Something went wrong saving user to Database' });
+          res.status(500).json({ message: 'Something went wrong saving user to Database' });
           return;
         }
   
         req.login(theUser, (err) => {
           if (err) {
-            res.json({ message: 'Something went wrong with automatic login after signup' });
+            res.status(500).json({ message: 'Something went wrong with automatic login after signup' });
             return;
           }
   
@@ -63,18 +63,18 @@ authRoutes.post('/signup', (req, res, next) => {
     authRoutes.post('/login', (req, res, next) => {
         passport.authenticate('local', (err, theUser, failureDetails) => {
           if (err) {
-            res.json({ message: 'Something went wrong authenticating user' });
+            res.status(500).json({ message: 'Something went wrong authenticating user' });
             return;
           }
       
           if (!theUser) {
-            res.json({message: "sorry, we coun't find that account"});
+            res.status(500).json({message: "sorry, we coun't find that account"});
             return;
           }
       
           req.login(theUser, (err) => {
             if (err) {
-              res.json({ message: 'Something went wrong logging in' });
+              res.status(500).json({ message: 'Something went wrong logging in' });
               return;
             }
       
