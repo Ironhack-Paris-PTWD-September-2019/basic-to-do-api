@@ -9,13 +9,13 @@ router.get('/tasks', (req, res, next) => {
         res.json(allTheTasks);
     })
     .catch((err)=>{
-        res.json(err);
+        res.status(500).json(err);
     })
 });
 
 router.post('/tasks/create', (req, res, next)=>{
     if(!req.user){
-       return res.json({message: 'sorry, you must be logged in to create a task'}) 
+       return res.status(401).json({message: 'sorry, you must be logged in to create a task'}) 
     }
     Task.create({
         title: req.body.title,
@@ -26,7 +26,7 @@ router.post('/tasks/create', (req, res, next)=>{
         res.json(response);
     })
     .catch((err)=>{
-        res.json(err);
+        res.status(500).json(err);
     })
 })
 
@@ -36,7 +36,7 @@ router.post('/tasks/edit/:id', (req, res, next)=>{
         res.json(response)
     })
     .catch((err)=>{
-        res.json(err)
+        res.status(500).json(err)
     })
 })
 
@@ -46,7 +46,7 @@ router.post('/tasks/delete/:id', (req, res, next)=>{
         res.json(response)
     })
     .catch((err)=>{
-        res.json(err)
+        res.status(500).json(err)
     })
 
 })
