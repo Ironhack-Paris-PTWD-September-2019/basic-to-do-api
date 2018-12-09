@@ -47,8 +47,14 @@ router.post('/tasks/edit/:id', (req, res, next)=>{
 })
 
 router.post('/tasks/delete/:id', (req, res, next)=>{
+    if(!req.user){
+       return res.status(401).json({message: 'sorry, you must be logged in to delete a task'}) 
+    }
     Task.findByIdAndRemove(req.params.id)
     .then((response)=>{
+        if(`${req.user._id}` !== `${response.owner}`){
+           return res.status(403).json({message: 'sorry, you must own the task to delete it'}) 
+        }
         res.json(response)
     })
     .catch((err)=>{
