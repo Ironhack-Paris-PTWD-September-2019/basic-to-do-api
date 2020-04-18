@@ -1,3 +1,10 @@
+# INSTALL
+
+```sh
+$ npm install
+$ npm start
+```
+
 # API
 
 | URL | req | res |
