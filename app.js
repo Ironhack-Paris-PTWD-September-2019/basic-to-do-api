@@ -10,11 +10,7 @@ const logger       = require('morgan');
 const path         = require('path');
 const cors         = require('cors');
 
-const LocalStrategy = require('passport-local').Strategy;
 const session    = require('express-session');
-const passport     = require('passport');
-
-require('./config/passport');
 
 
 mongoose.Promise = Promise;
@@ -58,9 +54,6 @@ app.use(session({
   resave: true,
   saveUninitialized: true
 }));
-      
-app.use(passport.initialize());
-app.use(passport.session());
 
 
 // default value for title local
@@ -76,9 +69,6 @@ app.use('/', index);
 
 const taskRoutes = require('./routes/tasks')
 app.use('/api', taskRoutes);
-
-const authroutes = require('./routes/authroutes')
-app.use('/api', authroutes);
 
 
 

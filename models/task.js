@@ -1,15 +1,10 @@
 const mongoose = require("mongoose");
 const Schema   = mongoose.Schema;
-// const User     = require('./user');
-
-
 
 
 const taskSchema = new Schema({
   title: String,
-  description: String,
-  doneyet: Boolean,
-  owner: {type: Schema.Types.ObjectId, ref: 'User'}
+  doneyet: { type: Boolean, default: false }
 
 }, {timestamps: true});
 
