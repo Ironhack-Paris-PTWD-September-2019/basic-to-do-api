@@ -5,7 +5,7 @@ const Task    = require('../models/task');
 // LIST
 router.get('/tasks', (req, res, next) => {
     Task.find().sort({createdAt: -1})
-        .then(tasks => res.json(allTheTasks))
+        .then(tasks => res.json(tasks))
         .catch(err => res.status(500).json(err))
 });
 
@@ -29,7 +29,7 @@ router.put('/tasks/:id', (req, res, next)=>{
 // DESTROY
 router.delete('/tasks/:id', (req, res, next)=>{
     Task.findByIdAndRemove(req.params.id)
-        .then(response => res.status(204).send())
+        .then(task => res.status(204).send())
         .catch(err => res.status(500).json(err))
 })
 
