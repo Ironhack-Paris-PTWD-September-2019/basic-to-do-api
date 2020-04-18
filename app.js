@@ -1,5 +1,7 @@
 require('dotenv').config();
 
+const pkg = require('./package.json')
+
 const bodyParser   = require('body-parser');
 const cookieParser = require('cookie-parser');
 const express      = require('express');
@@ -15,7 +17,7 @@ const session    = require('express-session');
 
 mongoose.Promise = Promise;
 mongoose
-  .connect('mongodb://localhost/blah-the-to-do-list', {useMongoClient: true})
+  .connect(`mongodb://localhost/${pkg.name}`, {useMongoClient: true})
   .then(() => {
     console.log('Connected to Mongo!')
   }).catch(err => {
