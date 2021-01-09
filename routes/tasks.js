@@ -13,7 +13,7 @@ router.get('/tasks', (req, res, next) => {
 router.post('/tasks', (req, res, next)=>{
     Task.create({
         title: req.body.title,
-        doneyet: req.body.doneyet
+        doneyet: false
     })
         .then(task=> res.status(201).json(task))
         .catch(err => res.status(500).json(err))
