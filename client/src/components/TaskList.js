@@ -6,14 +6,18 @@ import { getTasks, deleteTask, updateTask } from "../services/task-service";
 
 class TaskList extends React.Component {
   state = {
-    tasks: [],
-    // tasksDone: [],
-    // tasksUndone: [],
+    tasks: []
   };
 
   componentDidMount = () => {
     this.setTasks();
   };
+
+  addTask(newTask){
+    let tasks = [...this.state.tasks]
+    tasks.push(newTask)
+    this.setState({tasks})
+  }
 
   onDelete = (taskId) => {
     deleteTask(taskId)
@@ -26,11 +30,9 @@ class TaskList extends React.Component {
   };
 
   onUpdate = (taskId, status) => {
-    console.log(taskId);
     let tasks = this.state.tasks;
     const idx = tasks.findIndex((e) => e._id === taskId);
-    const taskToUpdate = tasks[idx];
-    console.log("taskToUpdate", taskToUpdate);
+
     updateTask(taskId, status).then((newTask) => {
       tasks[idx] = newTask;
       this.setState({ tasks });
@@ -48,16 +50,15 @@ class TaskList extends React.Component {
       <div className="container">
         <header>
           <h1>NOW IT'S TIME TO WORK 🏋 </h1>
-          <AddTask />
+          <AddTask addTask={this.addTask}/>
         </header>
         <div className="tasklist">
           <div className="tasklist-undone">
-          <h3>TODO</h3>
+            <h3>TODO</h3>
             <lu>
               {this.state.tasks
                 .filter((task) => !task.doneyet)
                 .map((task, id) => {
-                  console.log("inside list", task.doneyet)
                   return (
                     <li key={id}>
                       <TaskCart

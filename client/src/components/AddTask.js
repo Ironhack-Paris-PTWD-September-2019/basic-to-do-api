@@ -9,11 +9,11 @@ class AddTask extends React.Component {
   handleFormSubmit = (e) => {
     e.preventDefault();
     const title = this.state.title;
-
     if (this.state.title !== "") {
       createTask(title, false)
         .then((response) => {
           this.setState({ title: "" });
+          this.props.addTask(response)
           
         })
         .catch((error) => {
@@ -38,8 +38,8 @@ class AddTask extends React.Component {
             value={this.state.title}
             onChange={(e) => this.handleChange(e)}
           />
-          <button>
-            <img src="/add.svg" />
+          <button className="add-button">
+            ADD
           </button>
         </form>
       </div>

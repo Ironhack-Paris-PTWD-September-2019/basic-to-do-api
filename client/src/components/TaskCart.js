@@ -10,7 +10,6 @@ class TaskCart extends React.Component {
     this.toggle()
   }
 
-
   onUpdate = (e) => {
     this.props.onUpdate(this.props.taskId, {doneyet:this.state.isDone})
     this.toggle()
@@ -28,11 +27,8 @@ class TaskCart extends React.Component {
     return (
       <div className="task-cart">
         <p>{this.props.taskTitle}</p>
-        <div className="cart-buttons">
-        <button className="delete" onClick={() => this.props.onDelete(this.props.taskId)}>X</button>
         <button className="update" onClick={() => this.onUpdate()}>{this.state.text}</button>
-        </div>
-        
+        <button className="delete" onClick={() => this.props.onDelete(this.props.taskId)}>X</button>
       </div>
     );
   }
